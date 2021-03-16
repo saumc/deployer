@@ -13,6 +13,7 @@ jobs:
     image: ubuntu-2004:202010-01 
 
   steps:
+   - chown -R ${CIRCLE_PROJECT_USERNAME}:${CIRCLE_PROJECT_USERNAME} /go/src/github.com/saumc/deployer
    - checkout
    - run: 
       name: Setup environment
