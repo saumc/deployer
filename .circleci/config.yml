@@ -6,7 +6,7 @@
 #
 # Read the README for more information.
 jobs:
-machine:
+ machine:
   environment:
     GOPATH_HEAD: "$(echo $GOPATH | cut -d ':' -f 1)"
     GOPATH_BASE: "$GOPATH_HEAD/src/github.com/$CIRCLE_PROJECT_USERNAME"
@@ -16,7 +16,7 @@ machine:
   services:
     - docker
 
-dependencies:
+ dependencies:
   override:
     - rm -rf ${GOPATH_BASE}/
     - mkdir -p "$GOPATH_BASE"
@@ -25,7 +25,7 @@ dependencies:
     - go get github.com/govend/govend
     - sudo pip install awscli
 
-test:
+ test:
   override:
     - >
         go test
@@ -43,7 +43,7 @@ test:
 #    - 'GOPATH="$GOPATH_HEAD"; ( cd ${GOPATH_BASE}/${CIRCLE_PROJECT_REPONAME} && govend -u && git diff --quiet )'
 #    FIXME
 
-deployment:
+ deployment:
   hub_latest:
     # appropriately tag and push the container to dockerhub
     # only when on the master branch
