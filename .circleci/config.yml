@@ -16,7 +16,9 @@ jobs:
        DOCKER_REPO: "$(if [ $CIRCLE_PROJECT_USERNAME == 'Securing-DevOps' ]; then echo securingdevops; else echo $DOCKER_USER; fi)"
 
      steps:
-       - run: echo "testing config file" 
+       - checkout
+       - run: echo "Hello!! First step" 
+
      services:
        - docker
 
