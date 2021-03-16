@@ -10,7 +10,7 @@ jobs:
  build:
   #working_directory: /go/src/github.com/saumc/deployer
   #- run: export GOPATH_HEAD="$(echo ${GOPATH}|cut -d ':' -f 1)"    
-  working_directory: /home/circleci/.go_workspace/go/src/github.com/saumc/deployer
+  working_directory: /home/circleci/.go_workspace/src/github.com/saumc/deployer
   
   machine:
     image: ubuntu-2004:202010-01 
