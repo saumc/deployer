@@ -27,14 +27,14 @@ jobs:
        if [ ${CIRCLE_PROJECT_USERNAME} == 'Securing-DevOps' ]; then
          dr="securingdevops"
        else
-         dr=$DOCKER_USER
+         dr=${DOCKER_USER}
        fi
        cat >> $BASH_ENV << EOF
        export GOPATH_HEAD="$(echo ${GOPATH}|cut -d ':' -f 1)"
        #export GOPATH_HEAD="~/go"
        export GOPATH_BASE="$(echo ${GOPATH}|cut -d ':' -f 1)${gb}"
        #export GOPATH_BASE="${GOPATH_HEAD}${gb}"
-       export DOCKER_REPO="$dr"
+       export DOCKER_REPO="${dr}"
        EOF
    - run: echo ${GOPATH_HEAD}
    - run: echo ${GOPATH_BASE}
