@@ -16,6 +16,7 @@ jobs:
 
   steps:
    #- run: sudo chown -R ${CIRCLE_PROJECT_USERNAME}:${CIRCLE_PROJECT_USERNAME} /go/src/github.com/saumc/deployer
+   - run: echo ~
    - run: echo ${GOPATH}
    - checkout
    - run: 
@@ -34,7 +35,7 @@ jobs:
        EOF
    - run: mkdir -p "${GOPATH_BASE}"
    - run: mkdir -p "${GOPATH_HEAD}/bin" 
-   - run: sudo pip install awscli
+   #- run: sudo pip install awscli
 
    - run:
       name: Build application container 
