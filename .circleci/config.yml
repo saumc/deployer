@@ -8,16 +8,19 @@ version: 2
 # Read the README for more information. Migrating to Circle2.0
 jobs:
  build:
-  working_directory: /go/src/github.com/saumc/deployer
+  #working_directory: /go/src/github.com/saumc/deployer
+  working_directory: ~/go/src/github.com/saumc/deployer
+  
   machine:
     image: ubuntu-2004:202010-01 
 
   steps:
-   - run: sudo chown -R ${CIRCLE_PROJECT_USERNAME}:${CIRCLE_PROJECT_USERNAME} /go/src/github.com/saumc/deployer
+   #- run: sudo chown -R ${CIRCLE_PROJECT_USERNAME}:${CIRCLE_PROJECT_USERNAME} /go/src/github.com/saumc/deployer
+   - run: echo ${GOPATH}
    - checkout
    - run: 
       name: Setup environment
-      command: |
+      command: |       
        gb="/src/github.com/${CIRCLE_PROJECT_USERNAME}";
        if [ ${CIRCLE_PROJECT_USERNAME} == 'Securing-DevOps' ]; then
          dr="securingdevops"
