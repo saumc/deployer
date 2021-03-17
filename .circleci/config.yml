@@ -73,8 +73,8 @@ jobs:
         echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
 
         echo "[default]" > ~/.aws/config
-        echo "region = ap-south-1"  > ~/.aws/config
-        echo "output = json" > ~/.aws/config
+        echo "region = ap-south-1"  >> ~/.aws/config
+        echo "output = json" >> ~/.aws/config
    
    - deploy:
       command: | 
@@ -91,5 +91,8 @@ jobs:
         fi          
 
       # trigger ebs redeploy
-      #- aws elasticbeanstalk update-environment --region us-east-1 --application-name invoicer201707071231 --environment-id e-h4vyur8nup --version-label deployer-api
+   - run:
+      name: deploy to aws
+      command: |
+        aws elasticbeanstalk update-environment --region ap-south-1 --application-name deployer --environment-id e-zher6vasyw --version-label deployer-api
  
