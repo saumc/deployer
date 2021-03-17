@@ -4,7 +4,7 @@ version: 2
 # DOCKER_EMAIL   - login info for docker hub
 # DOCKER_USER
 # DOCKER_PASS
-#
+# AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 # Read the README for more information. Migrating to Circle2.0
 jobs:
  build:
@@ -64,12 +64,24 @@ jobs:
 
       # # Run GOVEND to check if outdated dependencies are present
        #- 'GOPATH="$GOPATH_HEAD"; ( cd ${GOPATH_BASE}/${CIRCLE_PROJECT_REPONAME} && govend -u && git diff --quiet )' #FIXME - removed dependency testing
+   - run:
+      name: aws credentials
+      command: |
+        mkdir -p ~/.aws
+        echo "[default]" > ~/.aws/credentials
+        echo "aws_access_key_id = ${AWS_ACCESS_KEY_ID}" >> ~/.aws/credentials
+        echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
 
+        echo "[default]" > ~/.aws/config
+        echo "region = ap-south-1"  > ~/.aws/config
+        echo "output = json" > ~/.aws/config
    
    - deploy:
       command: | 
        # appropriately tag and push the container to dockerhub
        # only when on the master branch
+
+
         if [ "${CIRCLE_BRANCH}" == "master" ]; then
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS};
             echo ${DOCKER_USER}/${CIRCLE_PROJECT_REPONAME}:${CIRCLE_TAG};
