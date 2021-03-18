@@ -11,11 +11,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 	"path/filepath"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/elasticbeanstalk"
 	"github.com/gorilla/mux"
 )
@@ -88,7 +90,7 @@ func deploy() {
 		session.New(),
 		&aws.Config{
 			Region: aws.String("ap-south-1"),
-			Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY")),
+			Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"),""),
 		})
 
 	log.Println("DEPLOY: READ following credentials: ", os.Getenv("AWS_ACCESS_KEY_ID"))
