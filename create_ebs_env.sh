@@ -10,11 +10,15 @@ fail() {
     exit 1
 }
 
-export AWS_DEFAULT_REGION=us-east-1
+export AWS_DEFAULT_REGION=${AWS_REGION:-ap-south-1}
 
 datetag=$(date +%Y%m%d%H%M)
-identifier=deployer$datetag
+identifier='deployer'
 mkdir -p tmp/$identifier
+
+createappenv=false
+creates3=false
+uploadapp=true
 
 echo "Creating EBS application $identifier"
 
@@ -23,6 +27,7 @@ aws ec2 describe-vpcs --filters Name=isDefault,Values=true > tmp/$identifier/def
 vpcid=$(jq -r '.Vpcs[0].VpcId' tmp/$identifier/defaultvpc.json)
 echo "default vpc is $vpcid"
 
+if $createappenv ; then
 # Create an elasticbeantalk application
 aws elasticbeanstalk create-application \
     --application-name $identifier \
@@ -40,17 +45,25 @@ aws elasticbeanstalk create-environment \
     --description "deployer API environment" \
     --tags "Key=Owner,Value=$(whoami)" \
     --solution-stack-name "$dockerstack" \
+    --option-settings file://instance-profile.json \
     --tier "Name=WebServer,Type=Standard,Version=''" > tmp/$identifier/ebcreateapienv.json || fail
+
+fi 
 apieid=$(jq -r '.EnvironmentId' tmp/$identifier/ebcreateapienv.json)
 echo "API environment $apieid is being created"
 
 # Upload the application version
-aws s3 mb s3://$identifier
-aws s3 cp app-version-deployer.json s3://$identifier/
+if $creates3 ; then
+#aws s3 mb s3://$identifier
+aws s3 mb s3://deployer-id
+#aws s3 cp app-version-deployer.json s3://$identifier/
+aws s3 cp app-version-deployer.json s3://deployer-id/
 aws elasticbeanstalk create-application-version \
     --application-name "$identifier" \
     --version-label deployer-api \
-    --source-bundle "S3Bucket=$identifier,S3Key=app-version-deployer.json" > tmp/$identifier/appversion.json
+    --source-bundle "S3Bucket=deployer-id,S3Key=app-version-deployer.json" > tmp/$identifier/appversion.json
+    #--source-bundle "S3Bucket=$identifier,S3Key=app-version-deployer.json" > tmp/$identifier/appversion.json
+fi
 
 # Wait for the environment to be ready (green)
 echo -n "waiting for environment"
@@ -64,10 +77,11 @@ done
 echo
 
 # Deploy the docker container to the instances
+if $uploadapp ; then
 aws elasticbeanstalk update-environment \
     --application-name $identifier \
     --environment-id $apieid \
     --version-label deployer-api > tmp/$identifier/$apieid.json
-
+fi
 url="$(jq -r '.CNAME' tmp/$identifier/$apieid.json)"
 echo "Environment is being deployed. Public endpoint is http://$url"

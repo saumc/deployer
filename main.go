@@ -86,8 +86,12 @@ func testAndDeploy() {
 func deploy() {
 	svc := elasticbeanstalk.New(
 		session.New(),
-		&aws.Config{Region: aws.String("ap-south-1")},
+		&aws.Config{
+			Region: aws.String("ap-south-1"),
+			Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"))
+		},
 	)
+	log.Println("DEPLOY: READ following credentials: ", os.Getenv("AWS_ACCESS_KEY_ID"))
 
 	params := &elasticbeanstalk.UpdateEnvironmentInput{
 		ApplicationName: aws.String("invoicer-db"),

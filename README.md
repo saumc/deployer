@@ -36,3 +36,26 @@ Next, still in main.go, replace the following code with your own, taken from the
 		VersionLabel:    aws.String("invoicer-api"),
 }
 ```
+## My notes:
+For deployer to be able to update invoicer environment it needs aws access keys. Adding following to the config.yml should work:
+(For this the input environment variables are added to circleci configuration; similar to DOCKER_USER and DOCKER_PASS)
+
+mkdir -p ~/.aws
+echo "[default]" > ~/.aws/credentials
+echo "aws_access_key_id = ${AWS_ACCESS_KEY_ID}" >> ~/.aws/credentials
+echo "aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
+
+echo "[default]" > ~/.aws/config
+echo "region = ap-south-1"  > ~/.aws/config
+echo "output = json" > ~/.aws/config
+
+
+## Flow:
+1. Changes in the deployer. finish circleci.
+2. deploy to aws  - ./create_ebs_env.sh 
+(can try to combine 1 and 2)
+3. changes to invoicer github - dockerhub - deployer activated to check AWS infra through webhook 
+4. If all ok - invoicer is deployed by the deployer. 
+- Ideally only 1 and 3 should be manual
+check deployer aws logs to check if the invoicer deployed ok.
+- ideally deployer is steady and changes are happening in the inoiver.
