@@ -1,5 +1,6 @@
 #!/bin/bash
 go get -u github.com/jvehent/pineapple
+echo Running security groups check
 $GOPATH/bin/pineapple <<EOF
 aws:
     region: ap-south-1
