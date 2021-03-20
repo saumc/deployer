@@ -56,11 +56,11 @@ jobs:
       name: Build application container 
       command: | 
         go install --ldflags '-extldflags "-static"' github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME};
+        go get -u github.com/jvehent/pineapple
         #go install --ldflags '-extldflags "-static"' ${GOPATH_BASE}/${CIRCLE_PROJECT_REPONAME};
         [ ! -e bin ] && mkdir bin;
         cp "$GOPATH_HEAD/bin/${CIRCLE_PROJECT_REPONAME}" bin/deployer
         chmod +x deploymentTests/*
-        sudo go get -u github.com/jvehent/pineapple
         docker build -t ${DOCKER_REPO}/${CIRCLE_PROJECT_REPONAME} .
 
       # # Run GOVEND to check if outdated dependencies are present
