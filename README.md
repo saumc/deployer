@@ -59,3 +59,9 @@ echo "output = json" > ~/.aws/config
 - Ideally only 1 and 3 should be manual
 check deployer aws logs to check if the invoicer deployed ok.
 - ideally deployer is steady and changes are happening in the inoiver.
+
+
+Connect to EC2
+
+
+ssh -i /c/Saumya_back/Explorations/security/SecDevOps_example/SSHKey.pem ec2-user@ec2-65-0-101-112.ap-south-1.compute.amazonaws.com
