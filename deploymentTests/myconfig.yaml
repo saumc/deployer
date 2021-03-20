@@ -8,13 +8,13 @@ components:
       type: elb
       tag:
           key: elasticbeanstalk:environment-name
-          value: invoicer-api
+          value: invoicer-db-invoicer-api
 
     - name: application
       type: ec2
       tag: 
           key: elasticbeanstalk:environment-name
-          value: invoicer-api
+          value: invoicer-db-invoicer-api
 
     - name: database
       type: rds
