@@ -61,7 +61,7 @@ check deployer aws logs to check if the invoicer deployed ok.
 - ideally deployer is steady and changes are happening in the inoiver.
 
 
+CIRCLE_TOKEN: ad009b26f5e8f109aa1e754d3ecca7ff38da1dc0
+
 Connect to EC2
-
-
 ssh -i /c/Saumya_back/Explorations/security/SecDevOps_example/SSHKey.pem ec2-user@ec2-65-0-101-112.ap-south-1.compute.amazonaws.com
