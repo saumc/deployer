@@ -11,6 +11,7 @@ ADD deploymentTests /app/deploymentTests/
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get -y install jq postgresql-client awscli
+RUN go get github.com/jvehent/pineapple 
 
 USER app
 EXPOSE 8080
