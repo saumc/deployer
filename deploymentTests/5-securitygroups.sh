@@ -19,3 +19,5 @@ ls $rundir/deploymentTests/myconfig.yaml
 
 
 $GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml
+
+pineapple -c $rundir/deploymentTests/myconfig.yaml
