@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo Install pipeapple first
 which go
-go get github.com/jvehent/pineapple
+go get -u github.com/jvehent/pineapple
 echo which pipeapple 
 which pineapple
 echo Running security groups check
