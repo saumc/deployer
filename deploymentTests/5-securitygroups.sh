@@ -18,6 +18,13 @@ echo "Locate yaml?"
 ls $rundir/deploymentTests/myconfig.yaml
 
 
-$GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml
+$GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml > out1
 
-pineapple -c $rundir/deploymentTests/myconfig.yaml
+pineapple -c $rundir/deploymentTests/myconfig.yaml > out2
+
+echo "out1"
+cat out1
+
+echo "out2"
+cat out2
+

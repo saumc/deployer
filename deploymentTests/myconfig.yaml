@@ -22,4 +22,8 @@ components:
           key: environment-name
           value: invoicer-api
 
+rules:
+    - src: 0.0.0.0/0
+      dst: load-balancer
+      dport: 443
 
