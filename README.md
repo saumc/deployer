@@ -65,3 +65,15 @@ CIRCLE_TOKEN: ad009b26f5e8f109aa1e754d3ecca7ff38da1dc0
 
 Connect to EC2
 ssh -i /c/Saumya_back/Explorations/security/SecDevOps_example/SSHKey.pem ec2-user@ec2-65-0-101-112.ap-south-1.compute.amazonaws.com
+
+
+Run a command in a running container
+runs bash : 
+sudo docker ps -a | awk '{print $NF}' | tail -n 1
+sudo docker exec -it elastic_jang bash
+
+debugging 5-security-group.sh
+changed 
+go testAndDeploy
+and output to $rundir/out1 instead of in the deploymentTest directory
+and then it passed. even though pineapple script showed a failure. overall it still passed.
