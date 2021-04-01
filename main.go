@@ -60,7 +60,8 @@ func (dplr *deployer) postWebHook(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println("Verified notification authenticity")
 
-	go testAndDeploy()
+	// go testAndDeploy() FIXME
+	testAndDeploy()
 	w.Write([]byte("OK"))
 }
 

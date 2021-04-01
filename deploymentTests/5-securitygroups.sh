@@ -17,12 +17,12 @@ rundir=`pwd`
 echo "cat myconfig.yaml"
 cat $rundir/deploymentTests/myconfig.yaml
 
-time $GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml &> $rundir/deploymentTests/out1
+time $GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml &> $rundir/out1
 
 #pineapple -c $rundir/deploymentTests/myconfig.yaml &> $rundir/deploymentTests/out2
 
 echo "cat out1"
-cat $rundir/deploymentTests/out1
+cat $rundir/out1
 
 #echo "cat out2"
 #cat $rundir/deploymentTests/out2
