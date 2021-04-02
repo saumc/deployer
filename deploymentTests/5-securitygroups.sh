@@ -14,8 +14,8 @@ ls $GOPATH/src/
 
 rundir=`pwd`
 
-echo "cat myconfig.yaml"
-cat $rundir/deploymentTests/myconfig.yaml
+#echo "cat myconfig.yaml"
+#cat $rundir/deploymentTests/myconfig.yaml
 
 $GOPATH/bin/pineapple -c $rundir/deploymentTests/myconfig.yaml
 
