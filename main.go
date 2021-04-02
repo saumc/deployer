@@ -33,6 +33,7 @@ func main() {
 	r.HandleFunc("/dockerhub", dplr.postWebHook).Methods("POST")
 	r.HandleFunc("/__heartbeat__", getHeartbeat).Methods("GET")
 	r.HandleFunc("/__version__", getVersion).Methods("GET")
+	r.HandleFunc("/test", executeTestandDeploy).Methods("GET")
 
 	// all set, start the http handler
 	log.Fatal(http.ListenAndServe(":8080", r))
@@ -73,7 +74,8 @@ func testAndDeploy() {
 	var do_deploy = true
 	for _, testFile := range testFiles {
 		log.Println("Executing test", testFile)
-		out, err := exec.Command(testFile).Output()
+		//out, err := exec.Command(testFile).Output()
+		out, err := exec.Command(testFile).CombinedOutput() //
 		if err != nil {
 			log.Printf("Test %s failed: Err: \n%s \n Out: \n%s", testFile, err, out)
 			do_deploy = false
@@ -119,6 +121,10 @@ func getHeartbeat(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("I am alive"))
 }
 
+func executeTestandDeploy( w http.ResponseWriter, r *http.Request) {
+	log.Println("Execute test and deploy from test URL")
+	go testAndDeploy()
+}
 // handleVersion returns the current version of the API
 func getVersion(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf(`{
